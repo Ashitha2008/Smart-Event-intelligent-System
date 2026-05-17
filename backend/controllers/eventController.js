@@ -80,6 +80,7 @@ exports.createEvent = async (req, res) => {
       location,
       capacity,
       ticketPrice,
+      image,
     } = req.body;
 
     // Validate required fields
@@ -108,6 +109,7 @@ exports.createEvent = async (req, res) => {
       location,
       capacity,
       ticketPrice,
+      image: image || "https://via.placeholder.com/300x200?text=Event",
       organizerId: req.user.id,
     });
 
@@ -152,6 +154,7 @@ exports.updateEvent = async (req, res) => {
       location,
       capacity,
       ticketPrice,
+      image,
     } = req.body;
 
     if (title) event.title = title;
@@ -162,6 +165,7 @@ exports.updateEvent = async (req, res) => {
     if (location) event.location = location;
     if (capacity) event.capacity = capacity;
     if (ticketPrice !== undefined) event.ticketPrice = ticketPrice;
+    if (image) event.image = image;
 
     event.updatedAt = Date.now();
     await event.save();

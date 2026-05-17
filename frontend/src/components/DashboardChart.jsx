@@ -106,7 +106,7 @@ export default function DashboardChart({
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ name, value }) => `${name}: $${value}`}
+              label={({ name, value }) => `${name}: ₹${value}`}
               outerRadius={80}
               fill="#A855F7"
               dataKey="value"
@@ -119,7 +119,7 @@ export default function DashboardChart({
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => `$${value}`}
+              formatter={(value) => `₹${value}`}
               contentStyle={{
                 backgroundColor: "rgba(0,0,0,0.8)",
                 border: "1px solid rgba(168, 85, 247, 0.3)",

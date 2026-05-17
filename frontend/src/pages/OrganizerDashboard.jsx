@@ -74,7 +74,7 @@ export default function OrganizerDashboard() {
       ]
     : [];
 
-  const COLORS = ["#3B82F6", "#8B5CF6"];
+  const COLORS = ["#A855F7", "#EC4899"];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-purple-950 to-black">
@@ -124,14 +124,14 @@ export default function OrganizerDashboard() {
                 <div className="glass-card hover:glass-card-hover backdrop-blur-md border border-purple-500/30 rounded-xl p-6 shadow-lg shadow-purple-500/10">
                   <p className="text-gray-400 text-sm">Total Revenue</p>
                   <p className="text-4xl font-bold text-green-400 mt-2">
-                    ${stats.totalRevenue?.toFixed(2)}
+                    ₹{stats.totalRevenue?.toFixed(2)}
                   </p>
                 </div>
 
                 <div className="glass-card hover:glass-card-hover backdrop-blur-md border border-purple-500/30 rounded-xl p-6 shadow-lg shadow-purple-500/10">
                   <p className="text-gray-400 text-sm">Avg Revenue/Event</p>
                   <p className="text-4xl font-bold text-orange-400 mt-2">
-                    ${stats.averageRevenuePerEvent}
+                    ₹{stats.averageRevenuePerEvent}
                   </p>
                 </div>
               </div>
@@ -148,20 +148,26 @@ export default function OrganizerDashboard() {
                   <BarChart data={chartData}>
                     <CartesianGrid
                       strokeDasharray="3 3"
-                      stroke="rgba(255,255,255,0.1)"
+                      stroke="rgba(168,85,247,0.2)"
                     />
-                    <XAxis dataKey="name" stroke="rgba(255,255,255,0.5)" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="value" fill="#3B82F6" />
+                    <XAxis dataKey="name" stroke="rgba(255,255,255,0.6)" />
+                    <YAxis stroke="rgba(255,255,255,0.6)" />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "rgba(0,0,0,0.8)",
+                        border: "1px solid rgba(168,85,247,0.5)",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <Bar dataKey="value" fill="#A855F7" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
               {/* Pie Chart */}
               {stats && (
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-4">
+                <div className="glass-card backdrop-blur-md border border-purple-500/30 rounded-xl p-6 shadow-lg shadow-purple-500/10">
+                  <h3 className="text-lg font-bold text-purple-300 mb-4">
                     Distribution
                   </h3>
                   <ResponsiveContainer width="100%" height={300}>
@@ -171,9 +177,9 @@ export default function OrganizerDashboard() {
                         cx="50%"
                         cy="50%"
                         outerRadius={80}
-                        fill="#8884d8"
+                        fill="#A855F7"
                         dataKey="value"
-                        label
+                        label={{ fill: "rgba(255,255,255,0.7)" }}
                       >
                         {chartData.map((entry, index) => (
                           <Cell
@@ -182,7 +188,13 @@ export default function OrganizerDashboard() {
                           />
                         ))}
                       </Pie>
-                      <Tooltip />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "rgba(0,0,0,0.8)",
+                          border: "1px solid rgba(168,85,247,0.5)",
+                          borderRadius: "8px",
+                        }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -190,19 +202,19 @@ export default function OrganizerDashboard() {
             </div>
 
             {/* Events Table */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            <div className="glass-card backdrop-blur-md border border-purple-500/30 rounded-xl p-6 shadow-lg shadow-purple-500/10">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-6">
                 Your Events
               </h2>
 
               {events.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-300 mb-4">
                     You haven't created any events yet
                   </p>
                   <button
                     onClick={() => navigate("/create-event")}
-                    className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                    className="btn-glass-primary"
                   >
                     Create Your First Event
                   </button>
@@ -210,21 +222,21 @@ export default function OrganizerDashboard() {
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-gray-100 border-b">
+                    <thead className="border-b border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
                       <tr>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-purple-300">
                           Event Title
                         </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-purple-300">
                           Date
                         </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-purple-300">
                           Attendees
                         </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-purple-300">
                           Price
                         </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-purple-300">
                           Actions
                         </th>
                       </tr>
@@ -233,31 +245,31 @@ export default function OrganizerDashboard() {
                       {events.map((event) => (
                         <tr
                           key={event._id}
-                          className="border-b hover:bg-gray-50"
+                          className="border-b border-purple-500/20 hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-pink-500/10 transition-all duration-300"
                         >
-                          <td className="px-6 py-4 text-sm text-gray-900">
+                          <td className="px-6 py-4 text-sm text-purple-200">
                             {event.title}
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-600">
+                          <td className="px-6 py-4 text-sm text-gray-300">
                             {new Date(event.date).toLocaleDateString()}
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-600">
+                          <td className="px-6 py-4 text-sm text-gray-300">
                             {event.attendees}/{event.capacity}
                           </td>
-                          <td className="px-6 py-4 text-sm text-green-600 font-semibold">
-                            ${event.ticketPrice}
+                          <td className="px-6 py-4 text-sm text-emerald-400 font-semibold">
+                            ₹{event.ticketPrice}
                           </td>
                           <td className="px-6 py-4 text-sm">
                             <div className="flex space-x-2">
                               <button
                                 onClick={() => navigate(`/events/${event._id}`)}
-                                className="text-blue-600 hover:text-blue-700"
+                                className="text-purple-400 hover:text-purple-300 hover:scale-110 transition-all duration-200"
                               >
                                 <Edit2 size={18} />
                               </button>
                               <button
                                 onClick={() => handleDeleteEvent(event._id)}
-                                className="text-red-600 hover:text-red-700"
+                                className="text-pink-400 hover:text-pink-300 hover:scale-110 transition-all duration-200"
                               >
                                 <Trash2 size={18} />
                               </button>

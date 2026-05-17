@@ -69,7 +69,7 @@ export default function BookingModal({ event, isOpen, onClose, onSuccess }) {
           <div>
             <p className="text-sm text-gray-400">Price per Ticket</p>
             <p className="font-semibold text-purple-400">
-              ${event.ticketPrice}
+              ₹{event.ticketPrice}
             </p>
           </div>
 
@@ -96,7 +96,7 @@ export default function BookingModal({ event, isOpen, onClose, onSuccess }) {
             <div className="flex justify-between">
               <span className="text-gray-400">Total Price:</span>
               <span className="font-bold text-lg bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                ${totalPrice.toFixed(2)}
+                ₹{totalPrice.toFixed(2)}
               </span>
             </div>
           </div>

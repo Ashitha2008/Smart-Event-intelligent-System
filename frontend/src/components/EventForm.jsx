@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X } from "lucide-react";
+import { X, Upload } from "lucide-react";
 import { EVENT_CATEGORIES } from "../utils/constants";
 
 /**
@@ -21,23 +21,67 @@ export default function EventForm({
       location: "",
       capacity: "",
       ticketPrice: "",
+      image: null,
     },
   );
 
+  const [imagePreview, setImagePreview] = useState(initialData?.image || null);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear error for this field
-    if (errors[name]) {
-      setErrors((prev) => ({
+    const { name, value, type, files } = e.target;
+
+    if (type === "file") {
+      const file = files[0];
+      if (file) {
+        // Validate file type
+        if (!file.type.startsWith("image/")) {
+          setErrors((prev) => ({
+            ...prev,
+            image: "Please upload a valid image file",
+          }));
+          return;
+        }
+
+        // Validate file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          setErrors((prev) => ({
+            ...prev,
+            image: "Image must be smaller than 5MB",
+          }));
+          return;
+        }
+
+        // Convert to base64
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData((prev) => ({
+            ...prev,
+            image: reader.result,
+          }));
+          setImagePreview(reader.result);
+          // Clear error if file was valid
+          if (errors.image) {
+            setErrors((prev) => ({
+              ...prev,
+              image: "",
+            }));
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    } else {
+      setFormData((prev) => ({
         ...prev,
-        [name]: "",
+        [name]: value,
       }));
+      // Clear error for this field
+      if (errors[name]) {
+        setErrors((prev) => ({
+          ...prev,
+          [name]: "",
+        }));
+      }
     }
   };
 
@@ -184,6 +228,64 @@ export default function EventForm({
         />
         {errors.location && (
           <p className="text-red-400 text-sm mt-1">{errors.location}</p>
+        )}
+      </div>
+
+      {/* Event Image Upload */}
+      <div>
+        <label className="block text-sm font-semibold text-purple-300 mb-2">
+          Event Image (Optional)
+        </label>
+        <div className="relative">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            className="hidden"
+            id="image-input"
+          />
+          <label
+            htmlFor="image-input"
+            className="glass-card-interactive backdrop-blur-sm border-2 border-dashed border-purple-500/50 rounded-xl p-6 cursor-pointer flex items-center justify-center hover:border-purple-400 transition"
+          >
+            <div className="text-center">
+              <Upload className="text-purple-400 mx-auto mb-2" size={32} />
+              <p className="text-gray-300 font-medium">Click to upload image</p>
+              <p className="text-gray-500 text-sm">or drag and drop</p>
+              <p className="text-gray-600 text-xs mt-1">
+                (Max 5MB, PNG/JPG/GIF)
+              </p>
+            </div>
+          </label>
+        </div>
+
+        {/* Image Preview */}
+        {imagePreview && (
+          <div className="mt-4 relative">
+            <img
+              src={imagePreview}
+              alt="Event preview"
+              className="w-full h-48 object-cover rounded-xl border border-purple-500/30"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setImagePreview(null);
+                setFormData((prev) => ({
+                  ...prev,
+                  image: null,
+                }));
+                document.getElementById("image-input").value = "";
+              }}
+              className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-600 text-white p-1 rounded-lg transition"
+            >
+              <X size={20} />
+            </button>
+          </div>
+        )}
+
+        {errors.image && (
+          <p className="text-red-400 text-sm mt-2">{errors.image}</p>
         )}
       </div>
 

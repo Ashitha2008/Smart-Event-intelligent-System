@@ -9,7 +9,8 @@ const { validationResult } = require("express-validator");
  * @returns {String} JWT token
  */
 const generateToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET, {
+  const jwtSecret = process.env.JWT_SECRET || "smart-events-secret-key-2026";
+  return jwt.sign({ id, role }, jwtSecret, {
     expiresIn: "7d",
   });
 };

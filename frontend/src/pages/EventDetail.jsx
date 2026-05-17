@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Users, DollarSign, ArrowLeft } from "lucide-react";
+import { Calendar, MapPin, Users, ArrowLeft } from "lucide-react";
 import { getEventById } from "../services/eventService";
 import { useAuth } from "../context/AuthContext";
 import BookingModal from "../components/BookingModal";
@@ -166,14 +166,10 @@ export default function EventDetail() {
               {/* Price */}
               <div className="glass-card-interactive backdrop-blur-sm border border-purple-500/20 rounded-xl p-4">
                 <div className="flex items-start space-x-3">
-                  <DollarSign
-                    className="text-pink-400 mt-1 flex-shrink-0"
-                    size={24}
-                  />
                   <div>
                     <p className="text-gray-400 text-sm">Ticket Price</p>
                     <p className="text-lg font-semibold text-pink-400">
-                      ${event.ticketPrice}
+                      ₹{event.ticketPrice}
                     </p>
                   </div>
                 </div>

@@ -1,13 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  Calendar,
-  MapPin,
-  Users,
-  DollarSign,
-  ArrowRight,
-  Zap,
-} from "lucide-react";
+import { Calendar, MapPin, Users, ArrowRight, Zap } from "lucide-react";
 
 /**
  * Event Card Component - Professional Modern Design
@@ -114,9 +107,8 @@ export default function EventCard({ event }) {
             </div>
 
             <div className="flex items-center space-x-3">
-              <DollarSign size={16} className="text-pink-400 flex-shrink-0" />
               <span className="font-bold text-pink-400 text-lg group-hover:text-pink-300 transition">
-                ${event.ticketPrice}
+                ₹{event.ticketPrice}
               </span>
             </div>
           </div>
